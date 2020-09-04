@@ -287,13 +287,13 @@ else
     echo -e "\e[33m > update_viewer \e[0m -- $(date "+%H:%M:%S") --"
     update_viewer
 fi
-echo -e " "
-if [ "$n_snap" == "$v_snap" ]; then
-    echo -e " > Snap-block (v $v_snap) already up to date!"
-else
-    echo -e "\e[33m > update_snap \e[0m -- $(date "+%H:%M:%S") --"
-    update_snap
-fi
+#echo -e " "
+#if [ "$n_snap" == "$v_snap" ]; then
+    #echo -e " > Snap-block (v $v_snap) already up to date!"
+#else
+    #echo -e "\e[33m > update_snap \e[0m -- $(date "+%H:%M:%S") --"
+    #update_snap
+#fi
 echo -e " "
 if [ "$n_docs" == "$v_docs" ]; then
     echo -e " > Documentation (v $v_docs) already up to date!"

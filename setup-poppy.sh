@@ -105,25 +105,73 @@ download_viewer()
 # Called from setup_puppet_master()
 download_snap()
 {
-    echo -e "\e[33m setup_puppet_master: download_snap \e[0m"
-    wget --progress=dot:mega "https://github.com/jmoenig/Snap/archive/v${snap_version}.zip" -O snap.zip
-    unzip snap.zip
-    rm -f snap.zip
-    mv "Snap-${snap_version}" snap
+    #-----------------------------------------------------
+    #                           SNAP
+    #-----------------------------------------------------
 
-    #pypot_root=$(python -c "import pypot, os; print(os.path.dirname(pypot.__file__))")
-    pypot_root="$POPPY_ROOT/pypot"
+    #echo -e "\e[33m setup_puppet_master: download_snap \e[0m"
+    #wget --progress=dot:mega "https://github.com/jmoenig/Snap/archive/v${snap_version}.zip" -O snap.zip
+    #unzip snap.zip
+    #rm -f snap.zip
+    #mv "Snap-${snap_version}" snap
+
+        #pypot_root=$(python -c "import pypot, os; print(os.path.dirname(pypot.__file__))")
+    #pypot_root="$POPPY_ROOT/pypot"
 
     # Delete snap default examples
-    rm -rf snap/Examples/EXAMPLES
+    #rm -rf snap/Examples/EXAMPLES
 
     # Snap projects are dynamicaly modified and copied on a local folder for acces rights issues
     # This snap_local_folder is defined depending the OS in pypot.server.snap.get_snap_user_projects_directory()
+    #snap_local_folder="$HOME/.local/share/pypot"
+    #mkdir -p "$snap_local_folder"
+
+    # Link pypot Snap projets to Snap! Examples folder
+    #for project in $pypot_root/server/snap_projects/*.xml; do
+        # Local file doesn"t exist yet if SnapRobotServer has not been started
+        #filename=$(basename "$project")
+        #cp "$project" "$snap_local_folder/"
+        #ln -s "$snap_local_folder/$filename" snap/Examples/
+        #echo -e "$filename\t$filename" >> snap/Examples/EXAMPLES
+    #done
+
+    #ln -s "$snap_local_folder/pypot-snap-blocks.xml" snap/libraries/poppy.xml
+    #echo -e "poppy.xml\tPoppy robots" >> snap/libraries/LIBRARIES
+
+    #-----------------------------------------------------
+    #                           SCRATCH
+    #-----------------------------------------------------
+
+    echo -e "\e[33m setup_puppet_master: download_snap \e[0m"
+    mkdir snap
+    cd snap
+    git clone https://github.com/LLK/scratch-gui
+    git clone https://github.com/LLK/scratch-vm
+    cd scratch-vm
+    sudo apt-get update
+    sudo apt-get install nodejs npm 
+    npm install
+    npm link
+    cd ../scratch-gui
+    npm install
+    npm link scratch-vm
+    cd ..
+    git clone https://github.com/poppy-project/scratch-poppy
+    cd scratch-poppy
+    bash install.sh
+
+    cd ../snap
+    mkdir Examples
+    cd Examples
+    touch EXAMPLES
+    cd ../..
+    
+    pypot_root="$POPPY_ROOT/pypot"
+
     snap_local_folder="$HOME/.local/share/pypot"
     mkdir -p "$snap_local_folder"
 
-    # Link pypot Snap projets to Snap! Examples folder
-    for project in $pypot_root/server/snap_projects/*.xml; do
+    for project in $pypot_root/server/snap_projects/*.sb3; do
         # Local file doesn"t exist yet if SnapRobotServer has not been started
         filename=$(basename "$project")
         cp "$project" "$snap_local_folder/"
@@ -131,8 +179,9 @@ download_snap()
         echo -e "$filename\t$filename" >> snap/Examples/EXAMPLES
     done
 
-    ln -s "$snap_local_folder/pypot-snap-blocks.xml" snap/libraries/poppy.xml
-    echo -e "poppy.xml\tPoppy robots" >> snap/libraries/LIBRARIES
+    search="exit 0"
+    replace="\/usr\/bin\/bash \/home\/poppy\/dev\/snap\/scratch-poppy\/start.sh \&\n\nexit 0"
+    sed -i "s/$search/$replace/" ../../../etc/rc.local
 }
 
 # Called from setup_puppet_master()
@@ -182,7 +231,7 @@ setup_documents()
 
         echo -e "symlink done"
 
-        get_snap_project "Snap project"
+        #get_snap_project "Snap project"
         get_notebooks "Python notebooks"
     popd
 }
