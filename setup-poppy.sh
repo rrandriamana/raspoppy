@@ -150,8 +150,19 @@ download_snap()
     echo -e "\e[33m setup_puppet_master: download_snap \e[0m"
     mkdir snap
     cd snap
-    git clone https://github.com/LLK/scratch-gui
-    git clone https://github.com/LLK/scratch-vm
+
+    echo -e "\e[33m setup_puppet_master: download_scratch-gui \e[0m"
+    wget --progress=dot:mega "https://github.com/LLK/scratch-gui/archive/master.zip" -O gui.zip
+    unzip gui.zip
+    rm -f gui.zip
+    mv "scratch-gui-master" scratch-gui
+
+    echo -e "\e[33m setup_puppet_master: download_scratch-vm \e[0m"
+    wget --progress=dot:mega "https://github.com/LLK/scratch-vm/archive/master.zip" -O vm.zip
+    unzip vm.zip
+    rm -f vm.zip
+    mv "scratch-vm-master" scratch-vm
+
     cd scratch-vm
     sudo apt-get update
     sudo apt-get install nodejs npm 
@@ -161,7 +172,13 @@ download_snap()
     npm install
     npm link scratch-vm
     cd ..
-    git clone https://github.com/poppy-project/scratch-poppy
+
+    echo -e "\e[33m setup_puppet_master: download_scratch-poppy \e[0m"
+    wget --progress=dot:mega "https://github.com/poppy-project/scratch-poppy/archive/master.zip" -O poppy.zip
+    unzip poppy.zip
+    rm -f poppy.zip
+    mv "scratch-poppy-master" scratch-poppy
+
     cd scratch-poppy
     bash install.sh
 
