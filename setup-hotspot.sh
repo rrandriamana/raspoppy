@@ -2,7 +2,8 @@
 
 # modified by JLC to use rpi3-4-hotspot.zip for Rapbian-buster :
 
-git_branch=$1
+git_branch="dev_gen2"
+#git_branch=$1
 
 cd /tmp || exit
 wget -O rpi3-hotspot.zip "https://github.com/poppy-project/rpi3-hotspot/archive/${git_branch}.zip"

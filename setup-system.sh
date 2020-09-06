@@ -8,7 +8,8 @@
 username=$1
 password=$2
 creature=$3
-git_branch=${4:-"master"}
+git_branch="dev_gen2"
+#git_branch=${4:-"master"}
 
 install_custom_raspiconfig()
 {

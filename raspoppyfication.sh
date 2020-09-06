@@ -69,7 +69,8 @@ poppy_hostname=${poppy_hostname:-"poppy"}
 git_branch=${git_branch:-"master"}
 reboot_after_install=${reboot_after_install:-0}
 
-url_root="https://raw.githubusercontent.com/poppy-project/raspoppy/$git_branch"
+url_root="https://raw.githubusercontent.com/rrandriamana/raspoppy/$git_branch"
+#url_root="https://raw.githubusercontent.com/poppy-project/raspoppy/$git_branch"
 
 cd /tmp || exit
 echo -e " "

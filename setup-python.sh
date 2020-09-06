@@ -2,7 +2,8 @@
  
 #version modified by JLC for RPi4 2020/02/13
 
-git_branch=$1
+git_branch="dev_gen2"
+#git_branch=$1
 
 create_virtual_python_env()
 {

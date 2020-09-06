@@ -5,7 +5,8 @@
 
 creature=$1
 hostname=$2
-branch=${3:-"master"}
+branch="dev_gen2"
+#branch=${3:-"master"}
 
 hampy_branch="master"
 
@@ -32,8 +33,10 @@ install_poppy_libraries()
         pip install hampy-${hampy_branch}.zip 
         
         echo -e "\e[33m install_poppy_libraries: pypot \e[0m"
-        wget --progress=dot:mega "https://github.com/poppy-project/pypot/archive/${branch}.zip" -O pypot-$branch.zip
-        pip install pypot-$branch.zip
+        wget --progress=dot:mega "https://github.com/rrandriamana/pypot/archive/scratch.zip" -O pypot-scratch.zip
+        #wget --progress=dot:mega "https://github.com/poppy-project/pypot/archive/${branch}.zip" -O pypot-$branch.zip
+        pip install pypot-scratch.zip
+        #pip install pypot-$branch.zip
     
         echo -e "\e[33m install_poppy_libraries: $creature \e[0m"
         wget --progress=dot:mega "https://github.com/poppy-project/$creature/archive/${branch}.zip" -O $creature-$branch.zip
@@ -67,10 +70,12 @@ setup_puppet_master()
         mkdir -p "$POPPY_ROOT"
     fi
     pushd "$POPPY_ROOT"
-        wget --progress=dot:mega "https://github.com/poppy-project/puppet-master/archive/${puppet_master_branch}.zip" -O puppet-master.zip
+        wget --progress=dot:mega "https://github.com/rrandriamana/puppet-master/archive/scratch.zip" -O puppet-master.zip
+        #wget --progress=dot:mega "https://github.com/poppy-project/puppet-master/archive/${puppet_master_branch}.zip" -O puppet-master.zip
         unzip puppet-master.zip
         rm -f puppet-master.zip
-        mv "puppet-master-${puppet_master_branch}" puppet-master
+        mv "puppet-master-scratch" puppet-master
+        #mv "puppet-master-${puppet_master_branch}" puppet-master
         pushd puppet-master
             pip install flask pyyaml requests
             python bootstrap.py "$hostname" "$creature" "--branch" "${branch}"
@@ -407,7 +412,8 @@ setup_update()
 {
     echo -e "\e[33m setup_update \e[0m"
     cd || exit
-    wget "https://raw.githubusercontent.com/poppy-project/raspoppy/$branch/poppy-update.sh" -O "$HOME/.poppy-update.sh"
+    wget "https://raw.githubusercontent.com/rrandriamana/raspoppy/scratch/poppy-update.sh" -O "$HOME/.poppy-update.sh"
+    #wget "https://raw.githubusercontent.com/poppy-project/raspoppy/$branch/poppy-update.sh" -O "$HOME/.poppy-update.sh"
 
     cat > poppy-update << EOF
 #!/$HOME/pyenv/bin/python
