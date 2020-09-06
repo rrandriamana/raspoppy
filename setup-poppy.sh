@@ -164,9 +164,16 @@ download_snap()
     mv "scratch-vm-master" scratch-vm
 
     cd scratch-vm
-    sudo apt-get update
-    sudo apt-get install nodejs npm 
-    npm install
+
+    curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh -o install_nvm.sh
+    bash install_nvm.sh
+    source ~/.profile
+    rm install_nvm
+    sudo nvm install 8.17.0
+    nvm use 8.17.0
+    #nvm alias default 8.17.0
+
+    sudo npm install
     npm link
     cd ../scratch-gui
     npm install
@@ -174,9 +181,9 @@ download_snap()
     cd ..
 
     echo -e "\e[33m setup_puppet_master: download_scratch-poppy \e[0m"
-    wget --progress=dot:mega "https://github.com/poppy-project/scratch-poppy/archive/master.zip" -O poppy.zip
-    unzip poppy.zip
-    rm -f poppy.zip
+    wget --progress=dot:mega "https://github.com/poppy-project/scratch-poppy/archive/master.zip" -O scratch-poppy.zip
+    unzip scratch-poppy.zip
+    rm -f scratch-poppy.zip
     mv "scratch-poppy-master" scratch-poppy
 
     cd scratch-poppy
@@ -203,7 +210,7 @@ download_snap()
 
     search="exit 0"
     replace="\/usr\/bin\/bash \/home\/poppy\/dev\/snap\/scratch-poppy\/start.sh \&\n\nexit 0"
-    sed -i "s/$search/$replace/" ../../../etc/rc.local
+    sudo sed -i "s/$search/$replace/" ../../../etc/rc.local
 }
 
 # Called from setup_puppet_master()
