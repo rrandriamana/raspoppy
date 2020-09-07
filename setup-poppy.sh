@@ -152,13 +152,13 @@ download_snap()
     cd snap
 
     echo -e "\e[33m setup_puppet_master: download_scratch-gui \e[0m"
-    wget --progress=dot:mega "https://github.com/LLK/scratch-gui/archive/master.zip" -O gui.zip
+    wget --progress=dot:mega "https://github.com/LLK/scratch-gui/archive/develop.zip" -O gui.zip
     unzip gui.zip
     rm -f gui.zip
     mv "scratch-gui-master" scratch-gui
 
     echo -e "\e[33m setup_puppet_master: download_scratch-vm \e[0m"
-    wget --progress=dot:mega "https://github.com/LLK/scratch-vm/archive/master.zip" -O vm.zip
+    wget --progress=dot:mega "https://github.com/LLK/scratch-vm/archive/develop.zip" -O vm.zip
     unzip vm.zip
     rm -f vm.zip
     mv "scratch-vm-master" scratch-vm
@@ -169,9 +169,8 @@ download_snap()
     bash install_nvm.sh
     source ~/.profile
     rm install_nvm.sh
-    nvm install 8.17.0
-    nvm use 8.17.0
-    #nvm alias default 8.17.0
+    nvm install 10.21.0
+    nvm use 10.21.0
 
     npm install
     npm link
@@ -181,7 +180,7 @@ download_snap()
     cd ..
 
     echo -e "\e[33m setup_puppet_master: download_scratch-poppy \e[0m"
-    wget --header="Authorization: token 33aa58896b02462a76db60f28f5496ee2990e09e" --progress=dot:mega "https://github.com/poppy-project/scratch-poppy/archive/master.zip" -O scratch-poppy.zip
+    wget --progress=dot:mega "https://github.com/poppy-project/scratch-poppy/archive/master.zip" -O scratch-poppy.zip
     unzip scratch-poppy.zip
     rm -f scratch-poppy.zip
     mv "scratch-poppy-master" scratch-poppy
