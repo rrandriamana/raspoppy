@@ -168,12 +168,12 @@ download_snap()
     curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh -o install_nvm.sh
     bash install_nvm.sh
     source ~/.profile
-    rm install_nvm
-    sudo nvm install 8.17.0
+    rm install_nvm.sh
+    nvm install 8.17.0
     nvm use 8.17.0
     #nvm alias default 8.17.0
 
-    sudo npm install
+    npm install
     npm link
     cd ../scratch-gui
     npm install
@@ -181,7 +181,7 @@ download_snap()
     cd ..
 
     echo -e "\e[33m setup_puppet_master: download_scratch-poppy \e[0m"
-    wget --progress=dot:mega "https://github.com/poppy-project/scratch-poppy/archive/master.zip" -O scratch-poppy.zip
+    wget --header="Authorization: token 33aa58896b02462a76db60f28f5496ee2990e09e" --progress=dot:mega "https://github.com/poppy-project/scratch-poppy/archive/master.zip" -O scratch-poppy.zip
     unzip scratch-poppy.zip
     rm -f scratch-poppy.zip
     mv "scratch-poppy-master" scratch-poppy
