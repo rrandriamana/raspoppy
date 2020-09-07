@@ -155,13 +155,13 @@ download_snap()
     wget --progress=dot:mega "https://github.com/LLK/scratch-gui/archive/develop.zip" -O gui.zip
     unzip gui.zip
     rm -f gui.zip
-    mv "scratch-gui-master" scratch-gui
+    mv "scratch-gui-develop" scratch-gui
 
     echo -e "\e[33m setup_puppet_master: download_scratch-vm \e[0m"
     wget --progress=dot:mega "https://github.com/LLK/scratch-vm/archive/develop.zip" -O vm.zip
     unzip vm.zip
     rm -f vm.zip
-    mv "scratch-vm-master" scratch-vm
+    mv "scratch-vm-develop" scratch-vm
 
     cd scratch-vm
 
