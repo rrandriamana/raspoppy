@@ -163,8 +163,6 @@ download_snap()
     rm -f vm.zip
     mv "scratch-vm-develop" scratch-vm
 
-    cd scratch-vm
-
     curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh -o install_nvm.sh
     bash install_nvm.sh
     source ~/.profile
@@ -172,12 +170,13 @@ download_snap()
     nvm install 10.21.0
     nvm use 10.21.0
 
+    cd ~/dev/snap/scratch-vm
     npm install
     npm link
-    cd ../scratch-gui
+    cd ~/dev/snap/scratch-gui
     npm install
     npm link scratch-vm
-    cd ..
+    cd ~/dev/snap
 
     echo -e "\e[33m setup_puppet_master: download_scratch-poppy \e[0m"
     wget --progress=dot:mega "https://github.com/poppy-project/scratch-poppy/archive/master.zip" -O scratch-poppy.zip
@@ -185,14 +184,14 @@ download_snap()
     rm -f scratch-poppy.zip
     mv "scratch-poppy-master" scratch-poppy
 
-    cd scratch-poppy
-    bash install.sh
+    cd ~/dev/snap/scratch-poppy/scratch_raspoppy_files
+    bash install-raspoppy.sh
 
-    cd ../snap
+    cd ~/dev/snap
     mkdir Examples
     cd Examples
     touch EXAMPLES
-    cd ../..
+    cd ~/dev
     
     pypot_root="$POPPY_ROOT/pypot"
 
@@ -209,7 +208,7 @@ download_snap()
 
     search="exit 0"
     replace="\/usr\/bin\/bash \/home\/poppy\/dev\/snap\/scratch-poppy\/start.sh \&\n\nexit 0"
-    sudo sed -i "s/$search/$replace/" ../../../etc/rc.local
+    sudo sed -i "s/$search/$replace/" /etc/rc.local
 }
 
 # Called from setup_puppet_master()
