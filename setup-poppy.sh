@@ -169,13 +169,14 @@ download_snap()
     rm install_nvm.sh
     nvm install 10.21.0
     nvm use 10.21.0
+    npm install -g yarn
 
     cd ~/dev/snap/scratch-vm
-    npm install
-    npm link
+    yarn install
+    yarn link
     cd ~/dev/snap/scratch-gui
-    npm install
-    npm link scratch-vm
+    yarn install
+    yarn link scratch-vm
     cd ~/dev/snap
 
     echo -e "\e[33m setup_puppet_master: download_scratch-poppy \e[0m"
@@ -206,9 +207,9 @@ download_snap()
         echo -e "$filename\t$filename" >> snap/Examples/EXAMPLES
     done
 
-    search="exit 0"
-    replace="\/usr\/bin\/bash \/home\/poppy\/dev\/snap\/scratch-poppy\/start.sh \&\n\nexit 0"
-    sudo sed -i "s/$search/$replace/" /etc/rc.local
+    #search="exit 0"
+    #replace="bash \/home\/poppy\/dev\/snap\/scratch-poppy\/scratch_raspoppy_files\/start.sh \&\n\nexit 0"
+    #sudo sed -i "s/$search/$replace/" /etc/rc.local
 }
 
 # Called from setup_puppet_master()
@@ -341,7 +342,7 @@ After=network.target network-online.target
 [Service]
 PIDFile=/run/puppet-master.pid
 Environment="PATH=$PATH"
-ExecStart=$HOME/pyenv/bin/python bouteillederouge.py
+ExecStart=$HOME/pyenv/bin/python bouteillederouge.py && /bin/bash $HOME/dev/snap/scrath-poppy/scratch_raspoppy_files/start.sh
 User=poppy
 Group=poppy
 WorkingDirectory=$POPPY_ROOT/puppet-master
