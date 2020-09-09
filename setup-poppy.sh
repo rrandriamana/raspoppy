@@ -342,7 +342,7 @@ After=network.target network-online.target
 [Service]
 PIDFile=/run/puppet-master.pid
 Environment="PATH=$PATH"
-ExecStart=$HOME/pyenv/bin/python bouteillederouge.py && /bin/bash $HOME/dev/snap/scrath-poppy/scratch_raspoppy_files/start.sh
+ExecStart=$HOME/pyenv/bin/python bouteillederouge.py && /bin/bash $HOME/dev/snap/scratch-poppy/scratch_raspoppy_files/start.sh
 User=poppy
 Group=poppy
 WorkingDirectory=$POPPY_ROOT/puppet-master
