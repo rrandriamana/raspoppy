@@ -322,6 +322,7 @@ setup_services()
     autostartup_webinterface
     autostartup_documentation
     autostartup_viewer
+    autostartup_scratch
 }
 # Called from setup_service()
 autostartup_webinterface()
@@ -342,7 +343,7 @@ After=network.target network-online.target
 [Service]
 PIDFile=/run/puppet-master.pid
 Environment="PATH=$PATH"
-ExecStart=$HOME/pyenv/bin/python bouteillederouge.py && /bin/bash $HOME/dev/snap/scratch-poppy/scratch_raspoppy_files/start.sh
+ExecStart=$HOME/pyenv/bin/python bouteillederouge.py 
 User=poppy
 Group=poppy
 WorkingDirectory=$POPPY_ROOT/puppet-master
@@ -418,6 +419,32 @@ WantedBy=multi-user.target
 EOF
 
     sudo systemctl enable poppy-viewer.service
+}
+# Called from setup_service()
+autostartup_scratch()
+{
+    echo -e "\e[33m autostartup_scratch \e[0m"
+    cd || exit
+
+    if [ -z "${POPPY_ROOT+x}" ]; then
+        export POPPY_ROOT="$HOME/dev"
+        mkdir -p "$POPPY_ROOT"
+    fi
+
+    sudo tee /etc/systemd/system/scratch.service > /dev/null <<EOF
+[Unit]
+Description=Scratch service
+[Service]
+ExecStart=/bin/bash $HOME/dev/snap/scratch-poppy/scratch_raspoppy_files/start.sh
+User=poppy
+Group=poppy
+Restart=on-failure
+Type=simple
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    sudo systemctl enable scratch.service
 }
 
 redirect_port80_webinterface()
