@@ -207,9 +207,7 @@ download_snap()
         echo -e "$filename\t$filename" >> snap/Examples/EXAMPLES
     done
 
-    #search="exit 0"
-    #replace="bash \/home\/poppy\/dev\/snap\/scratch-poppy\/scratch_raspoppy_files\/start.sh \&\n\nexit 0"
-    #sudo sed -i "s/$search/$replace/" /etc/rc.local
+    sudo ln -s /home/poppy/.nvm/versions/node/v10.21.0/bin/node /usr/bin/node
 }
 
 # Called from setup_puppet_master()
@@ -438,7 +436,6 @@ Description=Scratch service
 ExecStart=/bin/bash $HOME/dev/snap/scratch-poppy/scratch_raspoppy_files/start.sh
 User=poppy
 Group=poppy
-Restart=on-failure
 Type=simple
 [Install]
 WantedBy=multi-user.target
