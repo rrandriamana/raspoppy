@@ -52,7 +52,6 @@ fi
 v_puppetMaster=$old_version_puppetMaster
 v_creature=$old_version_creature
 v_pypot=$old_version_pypot
-v_snap=$old_version_snap
 v_viewer=$old_version_viewer
 v_docs=$old_version_docs
 v_monitor=$old_version_monitor
@@ -60,7 +59,6 @@ v_monitor=$old_version_monitor
 echo -e "version puppetMaster = $v_puppetMaster"
 echo -e "version $creature = $v_creature"
 echo -e "version pypot = $v_pypot"
-echo -e "version Snap block = $v_snap"
 echo -e "version poppy-viewer = $v_viewer"
 echo -e "version poppy-docs = $v_docs"
 echo -e "version poppy-monitor = $v_monitor"
@@ -86,7 +84,6 @@ n_creature=$new_version_creature
 n_viewer=$new_version_viewer
 n_docs=$new_version_docs
 n_monitor=$new_version_monitor
-n_snap=$new_version_snap
 
 echo -e "puppet-Master: branch = $branch, version = $n_puppetMaster "
 echo -e "pypot: branch = $b_pypot, version = $n_pypot "
@@ -94,14 +91,12 @@ echo -e "$creature: branch = $b_creature, version = $n_creature "
 echo -e "viewer: branch = $b_viewer, version = $n_viewer "
 echo -e "docs: branch = $b_docs, version = $n_docs "
 echo -e "monitor: branch = $b_viewer, version = $n_monitor "
-echo -e "Snap-block version = $n_snap"
 
 save_my_doc()
 {
     mkdir -p "/tmp/save"
     pushd "$myDoc_path"
         cp -r "Robot primitives" "/tmp/save"
-        cp -r "Snap project/Snap codes" "/tmp/save"
         cp -r "Moves recorded" "/tmp/save"
         cp -r "My Pictures" "/tmp/save"
     popd
@@ -110,7 +105,6 @@ restore_my_doc()
 {
     pushd "/tmp/save"
         cp -nr "Robot primitives" "$myDoc_path"
-        cp -nr "Snap codes" "$myDoc_path/Snap project"
         cp -nr "Moves recorded" "$myDoc_path"
         cp -nr "My Pictures" "$myDoc_path"
     popd
@@ -201,38 +195,7 @@ update_viewer()
     popd
     sudo systemctl start poppy-viewer.service
 }
-update_snap()
-{
-    pushd "$POPPY_ROOT"
-        rm -r snap
-        wget "https://github.com/jmoenig/Snap/archive/v${n_snap}.zip" -O snap.zip
-        unzip -q snap.zip
-        rm -f snap.zip
-        mv "Snap-${n_snap}" snap
 
-        #pypot_root=$(python -c "import pypot, os; print(os.path.dirname(pypot.__file__))")
-        pypot_root="$POPPY_ROOT/pypot"
-
-        # Delete snap default examples
-        rm -rf snap/Examples/EXAMPLES
-
-        # Snap projects are dynamicaly modified and copied on a local folder for acces rights issues
-        # This snap_local_folder is defined depending the OS in pypot.server.snap.get_snap_user_projects_directory()
-        snap_local_folder="$HOME/.local/share/pypot"
-
-        # Link pypot Snap projets to Snap! Examples folder
-        for project in $pypot_root/server/snap_projects/*.xml; do
-            # Local file doesn"t exist yet if SnapRobotServer has not been started
-            filename=$(basename "$project")
-            cp "$project" "$snap_local_folder/"
-            ln -s "$snap_local_folder/$filename" snap/Examples/
-            echo -e "$filename\t$filename" >> snap/Examples/EXAMPLES
-        done
-
-        ln -s "$snap_local_folder/pypot-snap-blocks.xml" snap/libraries/poppy.xml
-        echo -e "poppy.xml\tPoppy robots" >> snap/libraries/LIBRARIES
-    popd
-}
 update_documentation()
 {
     sudo systemctl stop poppy-docs.service
@@ -287,13 +250,6 @@ else
     echo -e "\e[33m > update_viewer \e[0m -- $(date "+%H:%M:%S") --"
     update_viewer
 fi
-#echo -e " "
-#if [ "$n_snap" == "$v_snap" ]; then
-    #echo -e " > Snap-block (v $v_snap) already up to date!"
-#else
-    #echo -e "\e[33m > update_snap \e[0m -- $(date "+%H:%M:%S") --"
-    #update_snap
-#fi
 echo -e " "
 if [ "$n_docs" == "$v_docs" ]; then
     echo -e " > Documentation (v $v_docs) already up to date!"

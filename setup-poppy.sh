@@ -225,26 +225,7 @@ setup_documents()
 
         echo -e "symlink done"
 
-        #get_snap_project "Snap project"
         get_notebooks "Python notebooks"
-    popd
-}
-
-# Called from setup_documents()
-get_snap_project()
-{
-    echo -e "\e[33m setup_documents: get_snap_project \e[0m"
-    mkdir -p "$1"
-    pushd "$1"
-        ln -s "$POPPY_ROOT/snap/help/SnapManual.pdf" Snap\ Documentation.pdf
-        ln -s "$POPPY_ROOT/snap/Examples" Snap\ codes
-        mkdir -p Snap\ activities
-        if [ "$creature" == "poppy-ergo-jr" ]; then
-            pushd Snap\ activities
-                wget --progress=dot:mega https://hal.inria.fr/hal-01384649/document -O Livret\ pédagogique.pdf
-                #TODO make online repo with all activities and download here
-            popd
-        fi
     popd
 }
 
