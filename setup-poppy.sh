@@ -33,10 +33,10 @@ install_poppy_libraries()
         pip install hampy-${hampy_branch}.zip 
         
         echo -e "\e[33m install_poppy_libraries: pypot \e[0m"
-        wget --progress=dot:mega "https://github.com/rrandriamana/pypot/archive/scratch.zip" -O pypot-scratch.zip
-        #wget --progress=dot:mega "https://github.com/poppy-project/pypot/archive/${branch}.zip" -O pypot-$branch.zip
-        pip install pypot-scratch.zip
-        #pip install pypot-$branch.zip
+        #wget --progress=dot:mega "https://github.com/rrandriamana/pypot/archive/scratch.zip" -O pypot-scratch.zip
+        wget --progress=dot:mega "https://github.com/poppy-project/pypot/archive/${branch}.zip" -O pypot-$branch.zip
+        #pip install pypot-scratch.zip
+        pip install pypot-$branch.zip
     
         echo -e "\e[33m install_poppy_libraries: $creature \e[0m"
         wget --progress=dot:mega "https://github.com/poppy-project/$creature/archive/${branch}.zip" -O $creature-$branch.zip
@@ -110,38 +110,6 @@ download_viewer()
 # Called from setup_puppet_master()
 download_snap()
 {
-    #-----------------------------------------------------
-    #                           SNAP
-    #-----------------------------------------------------
-
-    #echo -e "\e[33m setup_puppet_master: download_snap \e[0m"
-    #wget --progress=dot:mega "https://github.com/jmoenig/Snap/archive/v${snap_version}.zip" -O snap.zip
-    #unzip snap.zip
-    #rm -f snap.zip
-    #mv "Snap-${snap_version}" snap
-
-        #pypot_root=$(python -c "import pypot, os; print(os.path.dirname(pypot.__file__))")
-    #pypot_root="$POPPY_ROOT/pypot"
-
-    # Delete snap default examples
-    #rm -rf snap/Examples/EXAMPLES
-
-    # Snap projects are dynamicaly modified and copied on a local folder for acces rights issues
-    # This snap_local_folder is defined depending the OS in pypot.server.snap.get_snap_user_projects_directory()
-    #snap_local_folder="$HOME/.local/share/pypot"
-    #mkdir -p "$snap_local_folder"
-
-    # Link pypot Snap projets to Snap! Examples folder
-    #for project in $pypot_root/server/snap_projects/*.xml; do
-        # Local file doesn"t exist yet if SnapRobotServer has not been started
-        #filename=$(basename "$project")
-        #cp "$project" "$snap_local_folder/"
-        #ln -s "$snap_local_folder/$filename" snap/Examples/
-        #echo -e "$filename\t$filename" >> snap/Examples/EXAMPLES
-    #done
-
-    #ln -s "$snap_local_folder/pypot-snap-blocks.xml" snap/libraries/poppy.xml
-    #echo -e "poppy.xml\tPoppy robots" >> snap/libraries/LIBRARIES
 
     #-----------------------------------------------------
     #                           SCRATCH
