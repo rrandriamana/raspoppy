@@ -183,10 +183,12 @@ download_documentation()
 {
     echo -e "\e[33m setup_puppet_master: download_documentation \e[0m"
     version=$(curl --silent https://github.com/poppy-project/poppy-docs/releases/latest | sed 's#.*tag/\(.*\)\".*#\1#')
-    wget --progress=dot:mega "https://github.com/poppy-project/poppy-docs/releases/download/${version}/_book.zip" -O _book.zip
+    #wget --progress=dot:mega "https://github.com/poppy-project/poppy-docs/releases/download/${version}/_book.zip" -O _book.zip
+    wget --progress=dot:mega "https://github.com/rrandriamana/poppy-docs/archive/scratch.zip" -O _book.zip
     unzip _book.zip
     rm -rf _book.zip
-    mv _book poppy-docs
+    #mv _book poppy-docs
+    mv poppy-docs-scratch poppy-docs
     ln -s $(realpath .)/poppy-docs/en/assembly-guides/ergo-jr poppy-docs/en/assembly-guides/poppy-ergo-jr
     ln -s $(realpath .)/poppy-docs/fr/assembly-guides/ergo-jr poppy-docs/fr/assembly-guides/poppy-ergo-jr
     rm -r "poppy-docs/es" "poppy-docs/de" "poppy-docs/nl"
